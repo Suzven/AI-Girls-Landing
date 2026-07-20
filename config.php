@@ -5,9 +5,9 @@
    ============================================================ */
 
 define('DB_HOST', 'localhost');        // хост БД (обычно localhost)
-define('DB_NAME', 'companionverse');   // имя базы данных
-define('DB_USER', 'root');             // пользователь БД
-define('DB_PASS', '');                 // пароль БД
+define('DB_NAME', 'alexey_companionverse');   // имя базы данных
+define('DB_USER', 'alexey_companionverse');             // пользователь БД
+define('DB_PASS', 'Companionverse!1');                 // пароль БД
 
 // Базовый URL сайта без слеша на конце.
 // Если сайт лежит в корне домена — оставь пустым ''.
