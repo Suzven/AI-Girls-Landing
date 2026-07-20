@@ -7,6 +7,7 @@ require __DIR__ . '/includes/header.php';
 ?>
 
 <section class="hero">
+  <div class="hero-bg-effects"></div>
   <div class="hero-glow" aria-hidden="true"></div>
   <div class="container hero-inner">
     <span class="eyebrow">Curated AI companion directory</span>

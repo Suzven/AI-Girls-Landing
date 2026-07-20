@@ -10,96 +10,185 @@
 
   function escHtml(s) {
     return String(s).replace(/[&<>"']/g, function (c) {
-      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+      return {
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;'
+      }[c];
     });
   }
 
   function render(items) {
+
     if (!items.length) {
       box.innerHTML = '<div class="sr-empty">Nothing found. Try another name or category.</div>';
       box.classList.add('open');
       return;
     }
+
     box.innerHTML = items.map(function (t) {
+
       var logo = t.logo
         ? '<img src="' + escHtml(t.logo) + '" alt="">'
         : '<span class="sr-fallback">' + escHtml(t.name.charAt(0).toUpperCase()) + '</span>';
+
       return '<a class="sr-item" href="' + base + 'tool.php?slug=' + encodeURIComponent(t.slug) + '">' +
         logo +
-        '<span><span class="sr-name">' + escHtml(t.name) + '</span>' +
-        '<span class="sr-tag">' + escHtml(t.tagline || '') + '</span></span></a>';
+        '<span>' +
+        '<span class="sr-name">' + escHtml(t.name) + '</span>' +
+        '<span class="sr-tag">' + escHtml(t.tagline || '') + '</span>' +
+        '</span>' +
+        '</a>';
+
     }).join('');
+
     box.classList.add('open');
+
   }
 
   input.addEventListener('input', function () {
+
     clearTimeout(timer);
+
     var q = input.value.trim();
-    if (q.length < 2) { box.classList.remove('open'); return; }
+
+    if (q.length < 2) {
+      box.classList.remove('open');
+      return;
+    }
+
     timer = setTimeout(function () {
+
       fetch(base + 'search.php?q=' + encodeURIComponent(q))
         .then(function (r) { return r.json(); })
         .then(render)
-        .catch(function () { box.classList.remove('open'); });
+        .catch(function () {
+          box.classList.remove('open');
+        });
+
     }, 220);
+
   });
 
   document.addEventListener('click', function (e) {
-    if (!box.contains(e.target) && e.target !== input) box.classList.remove('open');
+
+    if (!box.contains(e.target) && e.target !== input)
+      box.classList.remove('open');
+
   });
 
   input.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape') box.classList.remove('open');
+
+    if (e.key === 'Escape')
+      box.classList.remove('open');
+
   });
+
 })();
 
-/* CompanionVerse — floating heart outlines in the hero */
+
+
+
+
+/* ===========================================================
+   Premium drifting background hearts
+   =========================================================== */
+
 (function () {
-  console.log("HEART SCRIPT START");
-  var hero = document.querySelector('.hero');
-  if (!hero) return;
-  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-  var HEART_PATH = 'M12 21s-6.7-4.35-9.33-8.06C.9 10.44 1.7 6.9 4.6 5.5c2-1 4.4-.35 5.9 1.3l1.5 1.6 1.5-1.6c1.5-1.65 3.9-2.3 5.9-1.3 2.9 1.4 3.7 4.94 1.93 7.44C18.7 16.65 12 21 12 21Z';
-  var COLORS = ['#a78bfa', '#c4b5fd', '#7c5cf5'];
-  var MAX_HEARTS = 9;
+    var hero = document.querySelector('.hero');
+    var layer = document.querySelector('.hero-bg-effects');
 
-  function rand(min, max) { return min + Math.random() * (max - min); }
+    if (!hero || !layer) return;
 
-  function spawnHeart() {
-    if (document.hidden) return;
-    if (hero.querySelectorAll('.heart-float').length >= MAX_HEARTS) return;
+    if (
+        window.matchMedia &&
+        window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    ) return;
 
-    var el = document.createElement('span');
-    el.className = 'heart-float';
+    var HEART_PATH =
+        'M12 21s-6.7-4.35-9.33-8.06C.9 10.44 1.7 6.9 4.6 5.5c2-1 4.4-.35 5.9 1.3l1.5 1.6 1.5-1.6c1.5-1.65 3.9-2.3 5.9-1.3 2.9 1.4 3.7 4.94 1.93 7.44C18.7 16.65 12 21 12 21Z';
 
-    var size = rand(13, 28);
-    var dur = rand(9, 15);
-    el.style.left = rand(4, 94) + '%';
-    el.style.setProperty('--h-size', size.toFixed(0) + 'px');
-    el.style.setProperty('--h-dur', dur.toFixed(1) + 's');
-    el.style.setProperty('--h-sway', rand(3, 5.5).toFixed(1) + 's');
-    el.style.setProperty('--h-amp', rand(8, 22).toFixed(0) + 'px');
-    el.style.setProperty('--h-rise', '-' + rand(380, 620).toFixed(0) + 'px');
-    el.style.setProperty('--h-tilt', rand(-14, 14).toFixed(0) + 'deg');
-    el.style.setProperty('--h-op', rand(0.18, 0.38).toFixed(2));
-    el.style.setProperty('--h-color', COLORS[Math.floor(Math.random() * COLORS.length)]);
+    function createHeart(size, left, top, opacity, duration, rotation) {
 
-    el.innerHTML = '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true">' +
-      '<path d="' + HEART_PATH + '" stroke="currentColor" stroke-width="1.6" ' +
-      'stroke-linecap="round" stroke-linejoin="round"/></svg>';
+        var el = document.createElement("div");
 
-    el.addEventListener('animationend', function (e) {
-      if (e.animationName === 'heartRise') el.remove();
-    });
+        el.className = "big-heart";
 
-    hero.appendChild(el);
-  }
+        el.style.width = size + "px";
+        el.style.height = size + "px";
 
-  // первые пару сердечек сразу, дальше — с случайным интервалом
-  setTimeout(spawnHeart, 600);
-  setTimeout(spawnHeart, 1800);
-  (function loop() {
-    setTimeout(function () { spawnHeart(); loop(); }, rand(1400, 2800));
-  })();
+        el.style.left = left + "%";
+        el.style.top = top + "%";
+
+        el.style.opacity = opacity;
+
+        el.style.setProperty("--dur", duration + "s");
+        el.style.setProperty("--rot", rotation + "s");
+
+        el.innerHTML =
+            '<svg viewBox="0 0 24 24" fill="none">' +
+            '<path d="' +
+            HEART_PATH +
+            '" stroke="#b894ff" stroke-width="1.15" stroke-linecap="round" stroke-linejoin="round"/>' +
+            '</svg>';
+
+        layer.appendChild(el);
+
+    }
+
+    // ------------------------------
+    // Huge hearts
+    // ------------------------------
+
+    createHeart(320, 4, 5, .035, 33, 140);
+
+    createHeart(260, 82, 12, .04, 28, 180);
+
+    createHeart(220, 15, 58, .03, 31, 160);
+
+    createHeart(300, 70, 64, .04, 35, 220);
+
+    // ------------------------------
+    // Medium
+    // ------------------------------
+
+    createHeart(170, 35, 18, .055, 22, 150);
+
+    createHeart(150, 56, 38, .05, 24, 160);
+
+    createHeart(130, 18, 36, .045, 26, 170);
+
+    createHeart(160, 82, 46, .055, 20, 150);
+
+    createHeart(145, 44, 70, .05, 24, 180);
+
+    createHeart(120, 63, 12, .045, 25, 170);
+
+    // ------------------------------
+    // Small
+    // ------------------------------
+
+    for (var i = 0; i < 12; i++) {
+
+        createHeart(
+
+            50 + Math.random() * 55,
+
+            Math.random() * 100,
+
+            Math.random() * 90,
+
+            .04 + Math.random() * .03,
+
+            18 + Math.random() * 12,
+
+            120 + Math.random() * 120
+
+        );
+
+    }
+
 })();
