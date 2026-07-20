@@ -55,6 +55,7 @@
 
 /* CompanionVerse — floating heart outlines in the hero */
 (function () {
+  console.log("HEART SCRIPT START");
   var hero = document.querySelector('.hero');
   if (!hero) return;
   if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
