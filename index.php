@@ -10,7 +10,6 @@ require __DIR__ . '/includes/header.php';
   <div class="hero-bg-effects"></div>
   <div class="hero-glow" aria-hidden="true"></div>
   <div class="container hero-inner">
-    <span class="eyebrow">Curated AI companion directory</span>
     <h1>Discover the Best<br>AI Companion Apps</h1>
     <p class="hero-sub">Compare AI companions, virtual girlfriends, roleplay chatbots and character generators — all in one place.</p>
     <div class="hero-search">
@@ -57,21 +56,6 @@ require __DIR__ . '/includes/header.php';
     <?php else: ?>
       <p class="empty-note">No tools added yet. Add your first tool in the management panel.</p>
     <?php endif; ?>
-  </div>
-</section>
-
-<section class="section section-tight" id="why">
-  <div class="container">
-    <div class="why-box">
-      <h2 class="section-title">Why CompanionVerse</h2>
-      <ul class="why-list">
-        <li>Curated AI companion directory</li>
-        <li>Honest, human-written overviews</li>
-        <li>Easy side-by-side comparison</li>
-        <li>Updated weekly</li>
-        <li>Free to browse</li>
-      </ul>
-    </div>
   </div>
 </section>
 

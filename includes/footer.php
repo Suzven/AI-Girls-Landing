@@ -3,7 +3,7 @@
   <div class="container footer-inner">
     <div class="footer-brand">
       <a class="logo" href="<?= SITE_URL ?>/index.php">Companion<span>Verse</span></a>
-      <p>A curated directory to discover and compare AI companion apps. We may earn an affiliate commission when you visit a listed website — at no extra cost to you.</p>
+      <p>A curated directory to discover and compare AI companion apps.</p>
     </div>
     <div class="footer-col">
       <h4>Browse</h4>
@@ -13,7 +13,6 @@
     </div>
     <div class="footer-col">
       <h4>About</h4>
-      <a href="<?= SITE_URL ?>/index.php#why">Why CompanionVerse</a>
       <a href="<?= SITE_URL ?>/index.php#faq">FAQ</a>
     </div>
   </div>
