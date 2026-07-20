@@ -257,6 +257,11 @@ h1, h2, h3 { font-family: var(--font-display); line-height: 1.2; }
 
 /* ---------- tool page ---------- */
 .tool-hero, .cat-hero { padding: 46px 0 40px; border-bottom: 1px solid var(--border-soft); }
+.tool-hero > .container { position: relative; z-index: 2; }
+.hero-bg-effects.tool-hero-bg-effects {
+  inset: 0 0 0 50%;
+  z-index: 0;
+}
 .cat-hero h1 { font-size: clamp(28px, 4.5vw, 42px); margin: 14px 0 8px; }
 .crumbs { position: relative; font-size: 13.5px; color: var(--dim); display: flex; gap: 8px; flex-wrap: wrap; }
 .crumbs a { color: var(--dim); }
@@ -342,6 +347,7 @@ h1, h2, h3 { font-family: var(--font-display); line-height: 1.2; }
 /* ---------- responsive ---------- */
 @media (max-width: 900px) {
   .tool-hero-grid { grid-template-columns: 1fr; gap: 28px; }
+  .hero-bg-effects.tool-hero-bg-effects { inset: 42% 0 0; }
   .footer-inner { grid-template-columns: 1fr; gap: 26px; }
 }
 @media (max-width: 680px) {

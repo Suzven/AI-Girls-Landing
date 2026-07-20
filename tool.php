@@ -20,6 +20,7 @@ require __DIR__ . '/includes/header.php';
 ?>
 
 <section class="tool-hero">
+  <div class="hero-bg-effects tool-hero-bg-effects" data-hearts="tool" aria-hidden="true"></div>
   <div class="hero-glow" aria-hidden="true"></div>
   <div class="container">
     <nav class="crumbs"><a href="<?= SITE_URL ?>/index.php">Home</a><span>/</span><?php if ($rel['categories']): ?><a href="<?= SITE_URL ?>/category.php?slug=<?= esc($rel['categories'][0]['slug']) ?>"><?= esc($rel['categories'][0]['name']) ?></a><span>/</span><?php endif; ?><b><?= esc($tool['name']) ?></b></nav>

@@ -98,10 +98,9 @@
 
 (function () {
 
-    var hero = document.querySelector('.hero');
     var layer = document.querySelector('.hero-bg-effects');
 
-    if (!hero || !layer) return;
+    if (!layer) return;
 
     if (
         window.matchMedia &&
@@ -136,6 +135,33 @@
             '</svg>';
 
         layer.appendChild(el);
+
+    }
+
+    if (layer.getAttribute('data-hearts') === 'tool') {
+
+        createHeart(270, 6, -8, .035, 31, 170);
+        createHeart(230, 70, 8, .045, 28, 190);
+        createHeart(190, 12, 58, .04, 25, 155);
+        createHeart(250, 68, 54, .035, 34, 210);
+        createHeart(135, 42, 16, .055, 22, 145);
+        createHeart(115, 82, 42, .05, 24, 165);
+        createHeart(105, 38, 72, .045, 21, 150);
+
+        for (var j = 0; j < 6; j++) {
+
+            createHeart(
+                42 + Math.random() * 48,
+                Math.random() * 92,
+                Math.random() * 86,
+                .035 + Math.random() * .025,
+                18 + Math.random() * 10,
+                120 + Math.random() * 100
+            );
+
+        }
+
+        return;
 
     }
 
