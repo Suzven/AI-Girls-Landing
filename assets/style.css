@@ -179,9 +179,12 @@ h1, h2, h3 { font-family: var(--font-display); line-height: 1.2; }
 .tool-card-top-rated::before {
   content: '';
   position: absolute;
-  z-index: -2;
-  inset: -100%;
+  z-index: 3;
+  inset: 0;
+  padding: 2px;
+  border-radius: inherit;
   background: conic-gradient(
+    from var(--top-rated-beam-angle),
     transparent 0deg 326deg,
     rgba(124, 92, 245, 0.08) 336deg,
     var(--lav-deep) 346deg,
@@ -189,9 +192,16 @@ h1, h2, h3 { font-family: var(--font-display); line-height: 1.2; }
     var(--lav) 357deg,
     transparent 360deg
   );
-  transform-origin: center;
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
   animation: topRatedBeam 4.5s linear infinite;
-  will-change: transform;
+  filter: drop-shadow(0 0 5px rgba(167, 139, 250, 0.7));
   pointer-events: none;
 }
 .tool-card-top-rated::after {
@@ -207,9 +217,13 @@ h1, h2, h3 { font-family: var(--font-display); line-height: 1.2; }
   border-color: transparent;
   box-shadow: 0 14px 44px rgba(124, 92, 245, 0.26), 0 0 24px rgba(167, 139, 250, 0.16);
 }
+@property --top-rated-beam-angle {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
 @keyframes topRatedBeam {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  to { --top-rated-beam-angle: 360deg; }
 }
 .tool-card-top { display: flex; align-items: flex-start; gap: 12px; }
 .tool-logo { width: 46px; height: 46px; border-radius: 11px; object-fit: cover; flex-shrink: 0; }
@@ -298,7 +312,6 @@ h1, h2, h3 { font-family: var(--font-display); line-height: 1.2; }
 .tool-hero-head h1 { font-size: clamp(26px, 4vw, 38px); margin-bottom: 8px; }
 .tool-hero-tagline { color: var(--muted); font-size: 17px; margin-bottom: 18px; }
 .tool-hero-info .tool-badges { margin-bottom: 26px; }
-.disclosure { margin-top: 14px; font-size: 12px; color: var(--dim); }
 .tool-hero-shot img {
   border-radius: 16px; border: 1px solid var(--border);
   box-shadow: 0 24px 70px rgba(0, 0, 0, 0.5);
@@ -473,6 +486,9 @@ h1, h2, h3 { font-family: var(--font-display); line-height: 1.2; }
 
   position:absolute;
 
+  width:var(--heart-size);
+  height:var(--heart-size);
+
   will-change:transform;
 
   filter:
@@ -482,6 +498,28 @@ h1, h2, h3 { font-family: var(--font-display); line-height: 1.2; }
   animation:
       heartFloat var(--dur) ease-in-out infinite alternate,
       heartRotate var(--rot) linear infinite;
+
+}
+
+@media (max-width:680px){
+
+  .big-heart{
+
+      width:var(--heart-size-mobile);
+      height:var(--heart-size-mobile);
+
+  }
+
+}
+
+@media (max-width:420px){
+
+  .big-heart{
+
+      width:var(--heart-size-small);
+      height:var(--heart-size-small);
+
+  }
 
 }
 

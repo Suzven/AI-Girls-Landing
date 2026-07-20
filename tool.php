@@ -52,7 +52,6 @@ require __DIR__ . '/includes/header.php';
             <svg viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7m0 0H8m9 0v9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
         <?php endif; ?>
-        <p class="disclosure">We may earn an affiliate commission if you sign up through this link. It never affects our reviews.</p>
       </div>
       <?php if ($tool['hero_image']): ?>
         <div class="tool-hero-shot">

@@ -116,8 +116,9 @@
 
         el.className = "big-heart";
 
-        el.style.width = size + "px";
-        el.style.height = size + "px";
+        el.style.setProperty("--heart-size", size + "px");
+        el.style.setProperty("--heart-size-mobile", Math.round(size * .52) + "px");
+        el.style.setProperty("--heart-size-small", Math.round(size * .42) + "px");
 
         el.style.left = left + "%";
         el.style.top = top + "%";
