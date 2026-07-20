@@ -37,6 +37,13 @@ function esc($s): string {
     return htmlspecialchars((string)$s, ENT_QUOTES, 'UTF-8');
 }
 
+/** URL картинки: внешние ссылки как есть, локальные (uploads/...) — абсолютный путь от корня сайта */
+function imgUrl(string $path): string {
+    if ($path === '') return '';
+    if (preg_match('#^(https?:)?//#i', $path) || str_starts_with($path, 'data:')) return $path;
+    return SITE_URL . '/' . ltrim($path, '/');
+}
+
 function slugify(string $text): string {
     $text = strtolower(trim($text));
     $text = preg_replace('/[^a-z0-9]+/', '-', $text);

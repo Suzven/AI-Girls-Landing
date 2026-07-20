@@ -3,9 +3,14 @@
 $cardBadges = getToolBadges((int)$t['id'], 4);
 ?>
 <a class="tool-card" href="<?= SITE_URL ?>/tool.php?slug=<?= esc($t['slug']) ?>">
+  <?php if (!empty($t['hero_image'])): ?>
+    <div class="tool-card-shot">
+      <img src="<?= esc(imgUrl($t['hero_image'])) ?>" alt="<?= esc($t['name']) ?> preview" loading="lazy">
+    </div>
+  <?php endif; ?>
   <div class="tool-card-top">
     <?php if ($t['logo']): ?>
-      <img class="tool-logo" src="<?= esc($t['logo']) ?>" alt="<?= esc($t['name']) ?> logo" loading="lazy">
+      <img class="tool-logo" src="<?= esc(imgUrl($t['logo'])) ?>" alt="<?= esc($t['name']) ?> logo" loading="lazy">
     <?php else: ?>
       <span class="tool-logo tool-logo-fallback"><?= esc(mb_strtoupper(mb_substr($t['name'], 0, 1))) ?></span>
     <?php endif; ?>

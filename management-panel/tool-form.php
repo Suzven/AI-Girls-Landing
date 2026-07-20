@@ -7,13 +7,32 @@ $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 $error = '';
 
 /* ---------- загрузка картинки ---------- */
+$uploadWarnings = [];
 function handleUpload(string $field, string $current): string {
-    if (empty($_FILES[$field]['name']) || $_FILES[$field]['error'] !== UPLOAD_ERR_OK) return $current;
+    global $uploadWarnings;
+    if (empty($_FILES[$field]['name'])) return $current; // файл не выбирали — ок
+    $err = $_FILES[$field]['error'];
+    if ($err !== UPLOAD_ERR_OK) {
+        $uploadWarnings[] = match ($err) {
+            UPLOAD_ERR_INI_SIZE, UPLOAD_ERR_FORM_SIZE => "«{$field}»: файл больше лимита сервера (upload_max_filesize = " . ini_get('upload_max_filesize') . "). Сожми картинку или увеличь лимит в php.ini.",
+            UPLOAD_ERR_PARTIAL => "«{$field}»: файл загрузился не полностью, попробуй ещё раз.",
+            default => "«{$field}»: ошибка загрузки (код {$err}).",
+        };
+        return $current;
+    }
     $ext = strtolower(pathinfo($_FILES[$field]['name'], PATHINFO_EXTENSION));
-    if (!in_array($ext, ['jpg', 'jpeg', 'png', 'webp', 'gif', 'svg'])) return $current;
+    if (!in_array($ext, ['jpg', 'jpeg', 'png', 'webp', 'gif', 'svg'])) {
+        $uploadWarnings[] = "«{$field}»: формат .{$ext} не поддерживается (только jpg, png, webp, gif, svg).";
+        return $current;
+    }
+    $dir = __DIR__ . '/../uploads';
+    if (!is_dir($dir) || !is_writable($dir)) {
+        $uploadWarnings[] = "«{$field}»: папка uploads/ отсутствует или недоступна для записи (проверь права 755/775 на хостинге).";
+        return $current;
+    }
     $name = 'uploads/' . uniqid($field . '_') . '.' . $ext;
-    $dest = __DIR__ . '/../' . $name;
-    if (move_uploaded_file($_FILES[$field]['tmp_name'], $dest)) return $name;
+    if (move_uploaded_file($_FILES[$field]['tmp_name'], __DIR__ . '/../' . $name)) return $name;
+    $uploadWarnings[] = "«{$field}»: не удалось сохранить файл в uploads/.";
     return $current;
 }
 
@@ -103,7 +122,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
             }
 
-            header('Location: index.php?msg=saved');
+            if ($uploadWarnings) {
+                $_SESSION['cv_upload_warn'] = $uploadWarnings;
+                header('Location: tool-form.php?id=' . $id . '&msg=saved');
+            } else {
+                header('Location: index.php?msg=saved');
+            }
             exit;
         } catch (PDOException $e) {
             $error = str_contains($e->getMessage(), 'Duplicate') ? 'Такой slug уже существует — укажи другой' : 'Ошибка сохранения: ' . $e->getMessage();
@@ -160,6 +184,10 @@ $title = $id ? 'Изменить: ' . $tool['name'] : 'Новый оффер';
   </div>
 
   <?php if ($error): ?><div class="admin-alert admin-alert-error"><?= esc($error) ?></div><?php endif; ?>
+  <?php if (($_GET['msg'] ?? '') === 'saved'): ?><div class="admin-alert admin-alert-ok">Оффер сохранён</div><?php endif; ?>
+  <?php if (!empty($_SESSION['cv_upload_warn'])): foreach ($_SESSION['cv_upload_warn'] as $w): ?>
+    <div class="admin-alert admin-alert-error">Картинка не сохранилась — <?= esc($w) ?></div>
+  <?php endforeach; unset($_SESSION['cv_upload_warn']); endif; ?>
 
   <form method="post" enctype="multipart/form-data" class="admin-form">
 
@@ -184,13 +212,13 @@ $title = $id ? 'Изменить: ' . $tool['name'] : 'Новый оффер';
           <span>Логотип — URL или файл</span>
           <input type="text" name="logo" value="<?= esc($tool['logo']) ?>" placeholder="https://... или uploads/...">
           <input type="file" name="logo_file" accept="image/*">
-          <?php if ($tool['logo']): ?><img class="preview" src="<?= str_starts_with($tool['logo'], 'http') ? esc($tool['logo']) : '../' . esc($tool['logo']) ?>" alt=""><?php endif; ?>
+          <?php if ($tool['logo']): ?><img class="preview" src="<?= esc(imgUrl($tool['logo'])) ?>" alt=""><?php endif; ?>
         </div>
         <div class="field">
           <span>Скриншот (Hero) — URL или файл. Один хороший.</span>
           <input type="text" name="hero_image" value="<?= esc($tool['hero_image']) ?>" placeholder="https://... или uploads/...">
           <input type="file" name="hero_file" accept="image/*">
-          <?php if ($tool['hero_image']): ?><img class="preview preview-wide" src="<?= str_starts_with($tool['hero_image'], 'http') ? esc($tool['hero_image']) : '../' . esc($tool['hero_image']) ?>" alt=""><?php endif; ?>
+          <?php if ($tool['hero_image']): ?><img class="preview preview-wide" src="<?= esc(imgUrl($tool['hero_image'])) ?>" alt=""><?php endif; ?>
         </div>
       </div>
     </fieldset>

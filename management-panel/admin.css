@@ -109,3 +109,9 @@
   .repeat-row, .repeat-row-faq { grid-template-columns: 1fr; }
   .row-del { width: 100%; }
 }
+
+/* мини-превью hero-скриншота в списке офферов */
+.admin-hero-thumb {
+  width: 64px; height: 38px; border-radius: 7px; object-fit: cover;
+  border: 1px solid var(--border); flex-shrink: 0; margin-left: auto;
+}

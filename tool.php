@@ -28,7 +28,7 @@ require __DIR__ . '/includes/header.php';
       <div class="tool-hero-info">
         <div class="tool-hero-head">
           <?php if ($tool['logo']): ?>
-            <img class="tool-logo tool-logo-lg" src="<?= esc($tool['logo']) ?>" alt="<?= esc($tool['name']) ?> logo">
+            <img class="tool-logo tool-logo-lg" src="<?= esc(imgUrl($tool['logo'])) ?>" alt="<?= esc($tool['name']) ?> logo">
           <?php else: ?>
             <span class="tool-logo tool-logo-lg tool-logo-fallback"><?= esc(mb_strtoupper(mb_substr($tool['name'], 0, 1))) ?></span>
           <?php endif; ?>
@@ -55,7 +55,7 @@ require __DIR__ . '/includes/header.php';
       </div>
       <?php if ($tool['hero_image']): ?>
         <div class="tool-hero-shot">
-          <img src="<?= esc($tool['hero_image']) ?>" alt="<?= esc($tool['name']) ?> screenshot" loading="lazy">
+          <img src="<?= esc(imgUrl($tool['hero_image'])) ?>" alt="<?= esc($tool['name']) ?> screenshot" loading="lazy">
         </div>
       <?php endif; ?>
     </div>

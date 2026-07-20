@@ -66,11 +66,12 @@ $msg = $_GET['msg'] ?? '';
         <tr>
           <td>
             <div class="admin-tool-cell">
-              <?php if ($t['logo']): ?><img src="<?= esc($t['logo']) ?>" alt=""><?php else: ?><span class="admin-logo-fallback"><?= esc(mb_strtoupper(mb_substr($t['name'], 0, 1))) ?></span><?php endif; ?>
+              <?php if ($t['logo']): ?><img src="<?= esc(imgUrl($t['logo'])) ?>" alt=""><?php else: ?><span class="admin-logo-fallback"><?= esc(mb_strtoupper(mb_substr($t['name'], 0, 1))) ?></span><?php endif; ?>
               <div>
                 <b><?= esc($t['name']) ?></b>
                 <span><?= esc(mb_substr($t['tagline'], 0, 60)) ?></span>
               </div>
+              <?php if ($t['hero_image']): ?><img class="admin-hero-thumb" src="<?= esc(imgUrl($t['hero_image'])) ?>" alt="" title="Hero-скриншот загружен"><?php endif; ?>
             </div>
           </td>
           <td><code><?= esc($t['slug']) ?></code></td>
