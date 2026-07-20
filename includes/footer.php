@@ -20,6 +20,6 @@
     <span>&copy; <?= date('Y') ?> <?= esc(SITE_NAME) ?>. All rights reserved.</span>
   </div>
 </footer>
-<script src="<?= SITE_URL ?>/assets/app.js"></script>
+<script src="<?= SITE_URL ?>/assets/app.js?v=<?= filemtime(__DIR__ . '/../assets/app.js') ?>"></script>
 </body>
 </html>
