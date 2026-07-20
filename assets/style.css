@@ -169,6 +169,48 @@ h1, h2, h3 { font-family: var(--font-display); line-height: 1.2; }
   transform: translateY(-3px);
   box-shadow: 0 14px 40px rgba(124, 92, 245, 0.18);
 }
+.tool-card-top-rated {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border-color: transparent;
+  box-shadow: 0 0 22px rgba(124, 92, 245, 0.12);
+}
+.tool-card-top-rated::before {
+  content: '';
+  position: absolute;
+  z-index: -2;
+  inset: -100%;
+  background: conic-gradient(
+    transparent 0deg 326deg,
+    rgba(124, 92, 245, 0.08) 336deg,
+    var(--lav-deep) 346deg,
+    #eee9ff 352deg,
+    var(--lav) 357deg,
+    transparent 360deg
+  );
+  transform-origin: center;
+  animation: topRatedBeam 4.5s linear infinite;
+  will-change: transform;
+  pointer-events: none;
+}
+.tool-card-top-rated::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: 2px;
+  border-radius: calc(var(--radius) - 2px);
+  background: var(--surface);
+  pointer-events: none;
+}
+.tool-card-top-rated:hover {
+  border-color: transparent;
+  box-shadow: 0 14px 44px rgba(124, 92, 245, 0.26), 0 0 24px rgba(167, 139, 250, 0.16);
+}
+@keyframes topRatedBeam {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
 .tool-card-top { display: flex; align-items: flex-start; gap: 12px; }
 .tool-logo { width: 46px; height: 46px; border-radius: 11px; object-fit: cover; flex-shrink: 0; }
 .tool-logo-fallback {
@@ -561,6 +603,12 @@ h1, h2, h3 { font-family: var(--font-display); line-height: 1.2; }
   .hero-glow::after,
   .hero-bg-effects,
   .big-heart{
+
+      animation:none!important;
+
+  }
+
+  .tool-card-top-rated::before {
 
       animation:none!important;
 

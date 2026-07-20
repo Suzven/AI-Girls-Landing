@@ -1,8 +1,11 @@
 <?php
 /** ожидает переменную $t (строка из tools) */
 $cardBadges = getToolBadges((int)$t['id'], 4);
+$isTopRated = $t['editor_score'] !== null
+    && $t['editor_score'] !== ''
+    && (float)$t['editor_score'] > 9;
 ?>
-<a class="tool-card" href="<?= SITE_URL ?>/tool.php?slug=<?= esc($t['slug']) ?>">
+<a class="tool-card<?= $isTopRated ? ' tool-card-top-rated' : '' ?>" href="<?= SITE_URL ?>/tool.php?slug=<?= esc($t['slug']) ?>">
   <?php if (!empty($t['hero_image'])): ?>
     <div class="tool-card-shot">
       <img src="<?= esc(imgUrl($t['hero_image'])) ?>" alt="<?= esc($t['name']) ?> preview" loading="lazy">
