@@ -21,7 +21,7 @@ $isTopRated = $t['editor_score'] !== null
       <h3><?= esc($t['name']) ?></h3>
       <div class="tool-flags">
         <?php if ($t['verified']): ?><span class="flag flag-verified"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Verified</span><?php endif; ?>
-        <?php if ($t['is_popular']): ?><span class="flag flag-hot">Popular</span><?php endif; ?>
+        <?php if ($t['is_popular']): ?><span class="flag flag-hot">Popular<svg class="popular-fire" viewBox="0 0 24 24" aria-hidden="true"><path class="popular-fire-outer" d="M13.6 2.2c.4 2.7-.7 4.3-2 5.7-1.1-1.4-1.3-3.2-1.3-4.1C7.1 6.1 4 9.6 4 14a8 8 0 0 0 16 0c0-4.7-2.7-9-6.4-11.8Z"/><path class="popular-fire-inner" d="M12.2 20a3.3 3.3 0 0 1-3.3-3.3c0-2 1.3-3.5 3.4-5.4-.1 1.8.7 2.8 1.6 3.6.8.7 1.3 1.5 1.3 2.5a3 3 0 0 1-3 2.6Z"/></svg></span><?php endif; ?>
         <?php if ($t['is_new']): ?><span class="flag flag-new">New</span><?php endif; ?>
       </div>
     </div>

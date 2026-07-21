@@ -50,6 +50,9 @@ h1, h2, h3 { font-family: var(--font-display); line-height: 1.2; }
   position: sticky; top: 0; z-index: 50;
   background: rgba(13, 10, 23, 0.85);
   backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transform: translateZ(0);
+  backface-visibility: hidden;
   border-bottom: 1px solid var(--border-soft);
 }
 .header-inner { display: flex; align-items: center; gap: 28px; height: 66px; }
@@ -243,6 +246,22 @@ h1, h2, h3 { font-family: var(--font-display); line-height: 1.2; }
 .flag svg { width: 11px; height: 11px; }
 .flag-verified { color: var(--good); background: rgba(126, 226, 168, 0.12); }
 .flag-hot { color: #f7b26a; background: rgba(247, 178, 106, 0.12); }
+.flag .popular-fire {
+  width: 14px;
+  height: 14px;
+  margin-left: 1px;
+  overflow: visible;
+  transform-origin: 50% 88%;
+  animation: popularFireFlicker 1.25s ease-in-out infinite;
+  filter: drop-shadow(0 0 4px rgba(255, 116, 61, 0.5));
+}
+.popular-fire-outer { fill: #ff7849; }
+.popular-fire-inner { fill: #ffd166; }
+@keyframes popularFireFlicker {
+  0%, 100% { transform: rotate(-2deg) scale(.94, 1); opacity: .88; }
+  35% { transform: rotate(3deg) scale(1.06, .96); opacity: 1; }
+  68% { transform: rotate(-1deg) scale(.98, 1.08); opacity: .94; }
+}
 .flag-new { color: var(--lav-bright); background: rgba(167, 139, 250, 0.14); }
 .flag-score { color: var(--lav-bright); background: rgba(167, 139, 250, 0.14); font-size: 12px; text-transform: none; letter-spacing: 0; }
 .score {
@@ -460,6 +479,8 @@ h1, h2, h3 { font-family: var(--font-display); line-height: 1.2; }
 
   overflow:hidden;
 
+  contain:strict;
+
   pointer-events:none;
 
   z-index:0;
@@ -491,13 +512,26 @@ h1, h2, h3 { font-family: var(--font-display); line-height: 1.2; }
 
   will-change:transform;
 
-  filter:
-      blur(.5px)
-      drop-shadow(0 0 24px rgba(167,139,250,.16));
-
   animation:
       heartFloat var(--dur) ease-in-out infinite alternate,
       heartRotate var(--rot) linear infinite;
+
+}
+
+.effects-paused .hero-bg-effects,
+.effects-paused .hero-glow::before,
+.effects-paused .hero-glow::after,
+.effects-paused .big-heart,
+.effects-paused.tool-card-top-rated::before,
+.effects-paused .popular-fire,
+.page-animations-paused .hero-bg-effects,
+.page-animations-paused .hero-glow::before,
+.page-animations-paused .hero-glow::after,
+.page-animations-paused .big-heart,
+.page-animations-paused .tool-card-top-rated::before,
+.page-animations-paused .popular-fire {
+
+  animation-play-state: paused!important;
 
 }
 
@@ -647,6 +681,12 @@ h1, h2, h3 { font-family: var(--font-display); line-height: 1.2; }
   }
 
   .tool-card-top-rated::before {
+
+      animation:none!important;
+
+  }
+
+  .popular-fire {
 
       animation:none!important;
 

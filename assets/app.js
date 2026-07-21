@@ -90,6 +90,47 @@
 
 
 
+/* ===========================================================
+   Pause decorative animations when they cannot be seen
+   =========================================================== */
+
+(function () {
+
+    var targets = document.querySelectorAll('.hero, .tool-hero, .tool-card');
+
+    if ('IntersectionObserver' in window) {
+
+        var observer = new IntersectionObserver(function (entries) {
+
+            entries.forEach(function (entry) {
+
+                entry.target.classList.toggle('effects-paused', !entry.isIntersecting);
+
+            });
+
+        }, { rootMargin: '120px 0px' });
+
+        targets.forEach(function (target) {
+
+            observer.observe(target);
+
+        });
+
+    }
+
+    function updatePageAnimationState() {
+
+        document.body.classList.toggle('page-animations-paused', document.hidden);
+
+    }
+
+    document.addEventListener('visibilitychange', updatePageAnimationState);
+    updatePageAnimationState();
+
+})();
+
+
+
 
 
 /* ===========================================================
