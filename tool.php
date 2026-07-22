@@ -48,7 +48,7 @@ require __DIR__ . '/includes/header.php';
           <?php foreach ($rel['badges'] as $b): ?><span class="chip"><?= esc($b) ?></span><?php endforeach; ?>
         </div>
         <?php if ($visit): ?>
-          <a class="btn btn-primary btn-lg" href="<?= esc($visit) ?>" target="_blank" rel="nofollow sponsored noopener">Visit Website
+          <a class="btn btn-primary btn-lg" href="<?= esc($visit) ?>" target="_blank" rel="nofollow sponsored noopener" onclick="gtag_report_conversion()">Visit Website
             <svg viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7m0 0H8m9 0v9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
         <?php endif; ?>

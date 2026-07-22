@@ -15,6 +15,21 @@ $pageDesc  = $pageDesc  ?? 'Compare AI companions, virtual girlfriends, roleplay
   gtag('js', new Date());
 
   gtag('config', 'AW-18341932393');
+
+  function gtag_report_conversion(url) {
+    var callback = function () {
+      if (typeof(url) != 'undefined') {
+        window.location = url;
+      }
+    };
+    gtag('event', 'conversion', {
+      'send_to': 'AW-18341932393/ZAVqCLys1tQcEOnajqpE',
+      'value': 1.0,
+      'currency': 'UAH',
+      'event_callback': callback
+    });
+    return false;
+  }
 </script>
   
 <!--MICROSOFT CLARITY RECORDS START-->
