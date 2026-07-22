@@ -6,6 +6,16 @@ $pageDesc  = $pageDesc  ?? 'Compare AI companions, virtual girlfriends, roleplay
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18341932393"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-18341932393');
+</script>
   
 <!--MICROSOFT CLARITY RECORDS START-->
 <script type="text/javascript">
